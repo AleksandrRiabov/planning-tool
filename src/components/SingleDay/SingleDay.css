@@ -1,0 +1,16 @@
+.singleDay {
+   width: 90%;
+   padding: 1%;
+   background: #fafafa;
+   margin: 0 auto;
+}
+
+.singleDay input{
+   border: none;
+   width: 30%;
+   min-width: 60px;
+   text-align: center;
+   outline: none;
+   background: #eeeeee;
+}
+
