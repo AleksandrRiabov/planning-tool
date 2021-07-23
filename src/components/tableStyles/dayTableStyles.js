@@ -25,5 +25,9 @@ export const useStyles = makeStyles({
    flexWrapper: {
       display: "flex",
       flexDirection: "column"
-   }
+   },
+	predicted: {
+		background: "#000",
+		color: "#fff"
+	}
  });
