@@ -1,5 +1,6 @@
 .singleDay {
    width: 90%;
+   max-width: 1300px;;
    padding: 1%;
    background: #fafafa;
    margin: 0 auto;

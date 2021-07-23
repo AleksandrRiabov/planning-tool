@@ -2,9 +2,8 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
 import "./SingleDay.css";
-import {ActualDataTable } from "../ActualDataTable/ActualDataTable";
-// import {PredictedDataTable } from "../PredictedDataTable/PredictedDataTable";
-import DayTable from "../DayTable/DayTable";
+import { DayTable } from "../DayTable/DayTable";
+
  
 
 const data = [
@@ -24,7 +23,7 @@ return (
       <div className="singleDay">
          <Grid container spacing={1}>
          <Grid item xs={12} md={12} >
-			 <ActualDataTable initialData={data}/>
+			 <DayTable initialData={data}/>
           </Grid>    
           <Grid item xs={12} md={6} >
           </Grid>       

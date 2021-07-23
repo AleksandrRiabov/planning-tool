@@ -29,5 +29,12 @@ export const useStyles = makeStyles({
 	predicted: {
 		background: "#000",
 		color: "#fff"
-	}
- });
+	},
+   predictedInfo: {
+      opacity: "0.5"
+   },
+   second: {
+      background: "#f6f6f6"
+   },
+  
+ })
