@@ -27,11 +27,14 @@ export const useStyles = makeStyles({
       flexDirection: "column"
    },
 	predicted: {
-		background: "#000",
+		background: "teal",
 		color: "#fff"
 	},
    predictedInfo: {
       opacity: "0.5"
+   },
+	first: {
+      background: "#a2a2a22b",
    },
    second: {
       background: "#f6f6f6"
