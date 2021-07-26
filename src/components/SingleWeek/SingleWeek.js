@@ -6,19 +6,21 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import LineChart from "../LineChart/LineChart";
 
 
 const data = [
 	{week: 1, days: [
-		{day: "monday", date: "27.07.2021", cases: 4545, pallets: 100, trailers: 5},
-		{day: "tuesday", date: "28.07.2021", cases: 4545, pallets: 100, trailers: 5},
-		{day: "wednesday", date: "29.07.2021", cases: 4545, pallets: 100, trailers: 5},
-		{day: "thursday", date: "30.07.2021", cases: 4545, pallets: 100, trailers: 5},
-		{day: "friday", date: "31.08.2021", cases: 4545, pallets: 100, trailers: 5},
-		{day: "saturday", date: "01.08.2021", cases: 4545, pallets: 100, trailers: 5},
-		{day: "sunday", date: "02.08.2021", cases: 4545, pallets: 100, trailers: 5},
+		{day: "monday", date: "27.07.2021", cases: 2500, pallets: 100, trailers: 4},
+		{day: "tuesday", date: "28.07.2021", cases: 4545, pallets: 150, trailers: 6},
+		{day: "wednesday", date: "29.07.2021", cases: 4150, pallets: 130, trailers: 5},
+		{day: "thursday", date: "30.07.2021", cases: 3500, pallets: 110, trailers: 5},
+		{day: "friday", date: "31.08.2021", cases: 2980, pallets: 105, trailers: 4},
+		{day: "saturday", date: "01.08.2021", cases: 4545, pallets: 166, trailers: 7},
+		{day: "sunday", date: "02.08.2021", cases: 1700, pallets: 74, trailers: 3},
 	]},
 	{week: 2, days: [
 		{day: "monday", date: "03.08.2021", cases: 4545, pallets: 100, trailers: 5},
@@ -44,6 +46,12 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  firstCell:{
+    background: "teal",
+    color: "#fff",
+    textTransform: "capitalize",
+    fontWeight: "600"
+  }
 });
 
 
@@ -51,31 +59,43 @@ export default function MainTable() {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Week number: {data[0].week}</TableCell>
-            <TableCell align="right">Day</TableCell>
-            <TableCell align="right">Cases</TableCell>
-            <TableCell align="right">Pallets</TableCell>
-            <TableCell align="right">Trailers</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data[0].days.map((day) => (
-            <TableRow key={day.date}>
-              <TableCell component="th" scope="row">
-                {day.day}
-              </TableCell>
-              <TableCell align="right">{day.date}</TableCell>
-              <TableCell align="right">{day.cases}</TableCell>
-              <TableCell align="right">{day.pallets}</TableCell>
-              <TableCell align="right">{day.trailers}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Grid container spacing={3}>
+      <Grid item xs={12} md={9}>
+        <Paper><LineChart data={data[0].days}/>f</Paper>
+      </Grid>
+      <Grid  item xs={12} md={3}>
+        <Paper>4545</Paper>
+      </Grid>
+      <Grid item xs={12}>
+          <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Week number: {data[0].week}</TableCell>
+                <TableCell align="center">Day</TableCell>
+                <TableCell align="center">Cases</TableCell>
+                <TableCell align="center">Pallets</TableCell>
+                <TableCell align="center">Trailers</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data[0].days.map((day) => (
+                <TableRow key={day.date}>
+                  <TableCell 
+                  className={classes.firstCell}
+                  component="th" scope="row">
+                    {day.day} <Button  variant="contained" color="secondary">Details</Button>
+                  </TableCell>
+                  <TableCell align="center">{day.date}</TableCell>
+                  <TableCell align="center">{day.cases}</TableCell>
+                  <TableCell align="center">{day.pallets}</TableCell>
+                  <TableCell align="center">{day.trailers}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
   );
 }

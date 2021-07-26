@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import { useGlobalContext } from "./context";
 import { SingleDay } from './components/SingleDay/SingleDay';
 import SingleWeek from "./components/SingleWeek/SingleWeek";
-import { DayTable } from './components/DayTable/DayTable';
+
 
 import Navbar from './components/Navbar/Navbar';
 
@@ -33,9 +33,14 @@ function App() {
         <Container className="main">
         <div className={classes.root}>
           <Grid container spacing={3}>
+          <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <SingleWeek />
+              </Paper>
+            </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <SingleDay/>
+                {/*<SingleDay/>*/}
               </Paper>
             </Grid>
         </Grid>
