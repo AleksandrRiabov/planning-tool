@@ -39,5 +39,4 @@ export const useStyles = makeStyles({
    second: {
       background: "#f6f6f6"
    },
-  
  })

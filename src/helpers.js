@@ -16,3 +16,25 @@ export const getTotal = (data, name) => {
       return total + +product[name];
     }, 0);
   };
+
+
+  export const createChartData = (data) => {
+    const chartData = {
+       labels: [],
+       cases: [],
+    }
+    const capitalize = (str, lower = false) =>
+  (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
+;
+
+       data.forEach(product => {
+          chartData.labels.push(capitalize(product.name));
+          chartData.labels.push("Expected-"+(product.name));
+          chartData.cases.push(product.cases);
+          chartData.cases.push(product.predictedCases);
+       });
+    
+    return chartData;
+ }
+
+ 

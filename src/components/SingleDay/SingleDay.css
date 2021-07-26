@@ -1,11 +1,6 @@
-.singleDay {
-   width: 90%;
-   max-width: 1300px;;
-   padding: 1%;
-   background: #fafafa;
-   margin: 0 auto;
+.singleDay{
+   transition: 5s ease;
 }
-
 .singleDay input{
    border: none;
    box-shadow: -2px -2px #88888820;
@@ -16,3 +11,33 @@
    background: #fff;
 }
 
+.chart-enter {
+   opacity: 0;
+   transform: scale(0.9);
+ }
+ .chart-enter-active {
+   opacity: 1;
+   transform: translateX(0);
+   transition: opacity 300ms, transform 300ms;
+ }
+ .chart-exit {
+   opacity: 1;
+ }
+ .chart-exit-active {
+   opacity: 0;
+   transform: scale(0.9);
+   transition: opacity 300ms, transform 300ms;
+ }
+ 
+ .chart {
+    margin: 20px 0;
+ }
+
+ .optionsBar{
+    width: 100%;
+    background: red;
+ }
+ .floatRight{
+    float: right;
+    align-self:flex-end;
+ }

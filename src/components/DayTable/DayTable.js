@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -7,55 +7,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
-
 import { useStyles } from "./dayTableStyles";
 import "./DayTable.css";
 
 import { getTrailersFromPallets, getTotal } from "../../helpers";
 
-export const DayTable = ({ initialData }) => {
-  const [data, setData] = useState(initialData);
-
+export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => {
   const classes = useStyles();
-
-  useEffect(() => {
-	  //Count "Predicted" pallets for each product according to Coficien and add to array of data
-    setData(
-      initialData.map((product) => {
-        const predictedPallets = Math.round(
-          product.cof * +product.predictedCases
-        );
-        return { ...product, predictedPallets };
-      })
-    );
-  }, [initialData]);
-
-	
-  const onPalletsInputChange = (e) => {
-	  const updated = data.map((product) => {
-        if (product.name === e.target.name) {
-          return { ...product, pallets: e.target.value };
-        } else {
-          return product;
-        }
-      });
-      setData(updated);
-  }; 
-
-	const onCasesInputChange = (e) => {
-		const updated = data.map((product) => {
-        if (product.name === e.target.name) {
-          const predictedPallets = e.target.value
-            ? Math.round(product.cof * +e.target.value)
-            : Math.round(product.cof * product.predictedCases);
-          return { ...product, cases: e.target.value, predictedPallets };
-        } else {
-          return product;
-        }
-      });
-      setData(updated);
-	}
-
 
   return (
     <TableContainer component={Paper}>
@@ -110,7 +68,7 @@ export const DayTable = ({ initialData }) => {
                 <TableCell align="center">
                   {pallets ? (pallets / 26).toFixed(2) : 0}
                 </TableCell>
-                 {/* SECTION EXPECTED*/}
+                {/* SECTION EXPECTED*/}
                 <TableCell
                   align="center"
                   className={!cases ? classes.predictedInfo : ""}
@@ -132,7 +90,7 @@ export const DayTable = ({ initialData }) => {
               </TableRow>
             );
           })}
-			 {/*SUMMRY*/}
+          {/*SUMMRY*/}
           <TableRow key="total">
             <TableCell
               className={classes.product}
@@ -160,7 +118,7 @@ export const DayTable = ({ initialData }) => {
                 </Box>
               </Box>
             </TableCell>
-				 {/* EXPECTED SUMMRY*/}
+            {/* EXPECTED SUMMRY*/}
             <TableCell align="center" className={classes.predicted}>
               Total Expected cases: {getTotal(data, "predictedCases")}
             </TableCell>
