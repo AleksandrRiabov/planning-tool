@@ -11,6 +11,8 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import LineChart from "../LineChart/LineChart";
 
+import SummaryBox from "../SummaryBox/SummaryBox";
+
 
 const data = [
 	{week: 1, days: [
@@ -51,7 +53,13 @@ const useStyles = makeStyles({
     color: "#fff",
     textTransform: "capitalize",
     fontWeight: "600"
-  }
+  },
+	tableHeader: {
+		background: "#e7fff4"
+	},
+	btn: {
+		background: "teal"
+	}
 });
 
 
@@ -64,18 +72,19 @@ export default function MainTable() {
         <Paper><LineChart data={data[0].days}/>f</Paper>
       </Grid>
       <Grid  item xs={12} md={3}>
-        <Paper>4545</Paper>
+        <SummaryBox/>
       </Grid>
       <Grid item xs={12}>
           <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
-            <TableHead>
+            <TableHead className={classes.tableHeader}>
               <TableRow>
                 <TableCell>Week number: {data[0].week}</TableCell>
                 <TableCell align="center">Day</TableCell>
                 <TableCell align="center">Cases</TableCell>
                 <TableCell align="center">Pallets</TableCell>
                 <TableCell align="center">Trailers</TableCell>
+				  <TableCell align="center">More Info</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -83,13 +92,14 @@ export default function MainTable() {
                 <TableRow key={day.date}>
                   <TableCell 
                   className={classes.firstCell}
-                  component="th" scope="row">
-                    {day.day} <Button  variant="contained" color="secondary">Details</Button>
+                   >
+                    {day.day}
                   </TableCell>
                   <TableCell align="center">{day.date}</TableCell>
                   <TableCell align="center">{day.cases}</TableCell>
                   <TableCell align="center">{day.pallets}</TableCell>
                   <TableCell align="center">{day.trailers}</TableCell>
+				 <TableCell align="center"><a href="#"><Button className={classes.btn} size="small" variant="contained" color="primary">Open Day Details</Button></a></TableCell>
                 </TableRow>
               ))}
             </TableBody>

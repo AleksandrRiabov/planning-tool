@@ -40,7 +40,7 @@ function App() {
             </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {/*<SingleDay/>*/}
+                {<SingleDay/>}
               </Paper>
             </Grid>
         </Grid>

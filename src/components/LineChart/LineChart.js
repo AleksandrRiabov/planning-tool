@@ -21,14 +21,14 @@ const LineChart = ({data}) =>  {
              data: data.map(day => day.pallets), 
              label: "Pallets",
              borderColor: "red",
-             backgroundColor: "rgba(255,0,0,0.5)",
+             backgroundColor: "rgba(255,0,0,0.2)",
              fill: true
           },
           {
             data: data.map(day => day.trailers), 
             label: "Trailers",
             borderColor: "#3333ff",
-            backgroundColor: "#00808026",
+            backgroundColor: "#3333ff20",
             fill: true
          }]
        }}
