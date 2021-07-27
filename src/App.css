@@ -5,3 +5,8 @@ a{
 .app .main{
   margin-top: 30px;
 }
+
+.bold{
+  font-weight: 600;
+  font-size: 1rem;
+}

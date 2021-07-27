@@ -59,7 +59,13 @@ const useStyles = makeStyles({
 	},
 	btn: {
 		background: "teal"
-	}
+	},
+  first: {
+    background: "#a2a2a22b",
+ },
+ second: {
+    background: "#f6f6f6"
+ },
 });
 
 
@@ -88,8 +94,8 @@ export default function MainTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data[0].days.map((day) => (
-                <TableRow key={day.date}>
+              {data[0].days.map((day,index) => (
+                <TableRow key={day.date} className={index % 2 === 0 ? classes.first: classes.second}>
                   <TableCell 
                   className={classes.firstCell}
                    >

@@ -5,30 +5,49 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 500,
-	  padding: "20px"
+	  padding: "20px",
   },
-  
+  titleBox:{
+	  background: "teal",
+	  color: "#fff"
+  }
 });
 
 const SummaryBox = () => {
 	const classes = useStyles();
 	
 	return (
-		<Paper >
-		   <Box className={classes.root}>
+		<Paper className={classes.root} >
+			<Box className={classes.titleBox}><Typography  variant="h6" color="inherit" gutterBottom>Week 52 </Typography></Box>
+		   <Box >
 			  <Box>
-				  <Typography  variant="h5" gutterBottom>Average</Typography>
+				<Box>
+					<Typography  variant="h6"  gutterBottom>Average:</Typography>
+					</Box>
+					<Box>
+						<Typography align={"left"} variant="body1" gutterBottom>Cases: <span className="bold">5454</span></Typography>
+					</Box>
+					<Box>
+						<Typography align={"left"} variant="body1" gutterBottom>Pallets: <span className="bold">554</span></Typography>
+					</Box>
+					<Box>
+						<Typography align={"left"} variant="body1" gutterBottom>Trailers: <span className="bold">54</span></Typography>
+					</Box>
+			  </Box>
+			  <Box>
+			  <Box>
+				  <Typography  variant="h6"  gutterBottom>Total:</Typography>
 				</Box>
 				<Box>
-					<Typography align={"left"} variant="h6" gutterBottom>Cases: 4545</Typography>
+					<Typography align={"left"} variant="body1" gutterBottom>Cases: <span className="bold">5454</span></Typography>
 				</Box>
 				<Box>
-					<Typography align={"left"} variant="h6" gutterBottom>Pallets: 454</Typography>
+					<Typography align={"left"} variant="body1" gutterBottom>Pallets: <span className="bold">544</span></Typography>
 				</Box>
 				<Box>
-					<Typography align={"left"} variant="h6" gutterBottom>Trailers: 44</Typography>
+					<Typography align={"left"} variant="body1" gutterBottom>Trailers: <span className="bold">54</span></Typography>
 				</Box>
+			  </Box>
 			</Box>
 		</Paper>
 	)

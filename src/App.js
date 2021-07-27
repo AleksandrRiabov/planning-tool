@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import { useGlobalContext } from "./context";
 import { SingleDay } from './components/SingleDay/SingleDay';
 import SingleWeek from "./components/SingleWeek/SingleWeek";
-
+import Footer from "./components/Footer/Footer";
 
 import Navbar from './components/Navbar/Navbar';
 
@@ -46,6 +46,7 @@ function App() {
         </Grid>
       </div>      
       </Container>
+      <Footer />
     </div>
   );
 }
