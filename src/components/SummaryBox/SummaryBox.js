@@ -39,13 +39,13 @@ const SummaryBox = () => {
 				  <Typography  variant="h6"  gutterBottom>Total:</Typography>
 				</Box>
 				<Box>
-					<Typography align={"left"} variant="body1" gutterBottom>Cases: <span className="bold">5454</span></Typography>
+					<Typography align={"left"} variant="body1" gutterBottom>Cases: <span className="bold">39847</span></Typography>
 				</Box>
 				<Box>
-					<Typography align={"left"} variant="body1" gutterBottom>Pallets: <span className="bold">544</span></Typography>
+					<Typography align={"left"} variant="body1" gutterBottom>Pallets: <span className="bold">4237</span></Typography>
 				</Box>
 				<Box>
-					<Typography align={"left"} variant="body1" gutterBottom>Trailers: <span className="bold">54</span></Typography>
+					<Typography align={"left"} variant="body1" gutterBottom>Trailers: <span className="bold">511</span></Typography>
 				</Box>
 			  </Box>
 			</Box>

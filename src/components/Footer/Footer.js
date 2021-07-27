@@ -20,7 +20,7 @@ const useStyles = makeStyles({
          <Container>
             <Grid container spacing={5}>
                <Grid item xs={12} sm={4}>
-                  <Box borederBottom={1}>Hello</Box>
+                  <Box borderBottom={1}>Hello</Box>
                </Grid>
             </Grid>
          </Container>        

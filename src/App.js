@@ -1,4 +1,10 @@
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -15,39 +21,38 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+	container: {
+		minHeight: "75vh"
+	}
 }));
 
 function App() {
   const classes = useStyles();
 
   const data = useGlobalContext();
-  console.log(data)
+
   return (
+	  <Router>
+	 
     <div className="app">
       <Navbar />
         <Container className="main">
         <div className={classes.root}>
-          <Grid container spacing={3}>
-          <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <SingleWeek />
-              </Paper>
-            </Grid>
+          <Grid className={classes.container} container spacing={3}>
+			 <Switch>
+                <Route path="/" exact><SingleWeek /></Route>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {<SingleDay/>}
+                <Route path="/day"><SingleDay/></Route>
               </Paper>
             </Grid>
+		    </Switch>		 
         </Grid>
       </div>      
       </Container>
       <Footer />
     </div>
+		   </Router>
   );
 }
 
