@@ -14,6 +14,10 @@ import { getTrailersFromPallets, getTotal } from "../../helpers";
 export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => {
   const classes = useStyles();
 
+  const { totalCases, totalPallets, totalPredictedCases, totalPredictedPallets } = getTotal(data);
+  const totalActualTrailers = getTrailersFromPallets(totalPallets);
+  const totalPredictedTrailers = getTrailersFromPallets(totalPredictedPallets);
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -37,7 +41,7 @@ export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => 
         <TableBody>
           {data.map((product, index) => {
             const { name, cases, pallets, predictedCases, predictedPallets } =
-              product;
+              product;           
             return (
               <TableRow
                 className={index % 2 === 0 ? classes.second : classes.first}
@@ -99,30 +103,30 @@ export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => 
               TOTAL
             </TableCell>
             <TableCell align="center">
-              Total cases: {getTotal(data, "cases")}
+              Total cases: {totalCases}
             </TableCell>
             <TableCell align="center">
-              Total Pallests: {getTotal(data, "pallets")}
+              Total Pallests: {totalPallets}
             </TableCell>
             <TableCell align="center" display="flex">
               Total:
               <Box className={classes.flexWrapper}>
                 <Box>
-                  {getTrailersFromPallets(getTotal(data, "pallets")).trailers}{" "}
-                  Trailers{" "}
+                  { totalActualTrailers.trailers }
+                  {" "} Trailers
                 </Box>
                 <Box>
-                  {getTrailersFromPallets(getTotal(data, "pallets")).pallets}{" "}
-                  pallets
+                  { totalActualTrailers.pallets }
+                  {" "}pallets
                 </Box>
               </Box>
             </TableCell>
             {/* EXPECTED SUMMRY*/}
             <TableCell align="center" className={classes.predicted}>
-              Total Expected cases: {getTotal(data, "predictedCases")}
+              Total Expected cases: { totalPredictedCases }
             </TableCell>
             <TableCell align="center" className={classes.predicted}>
-              Total Expected Pallests: {getTotal(data, "predictedPallets")}
+              Total Expected Pallests: { totalPredictedPallets }
             </TableCell>
             <TableCell
               align="center"
@@ -132,18 +136,12 @@ export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => 
               Total Expected:
               <Box className={classes.flexWrapper}>
                 <Box>
-                  {
-                    getTrailersFromPallets(getTotal(data, "predictedPallets"))
-                      .trailers
-                  }{" "}
-                  Trailers{" "}
+                  {totalPredictedTrailers.trailers}
+                  {" "} Trailers
                 </Box>
                 <Box>
-                  {
-                    getTrailersFromPallets(getTotal(data, "predictedPallets"))
-                      .pallets
-                  }{" "}
-                  pallets
+                  {totalPredictedTrailers.pallets}
+                  {" "} pallets
                 </Box>
               </Box>
             </TableCell>

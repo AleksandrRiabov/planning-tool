@@ -1,7 +1,7 @@
 
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme) => ({
    table: {
      minWidth: 350,
    },
@@ -39,4 +39,9 @@ export const useStyles = makeStyles({
    second: {
       background: "#f6f6f6"
    },
- })
+   paper: {
+      padding: theme.spacing(2),
+      textAlign: "center",
+      color: theme.palette.text.secondary,
+   }
+ }));

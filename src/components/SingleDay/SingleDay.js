@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import { makeStyles } from '@material-ui/core/styles';
 import "./SingleDay.css";
 import { DayTable } from "../DayTable/DayTable";
 import BarChart from "../BarChart/BarChart";
@@ -70,11 +71,20 @@ const initialData = [
     cof: 0.009,
   },
 ];
+const useStyles = makeStyles((theme) => ({
+   paper: {
+      padding: theme.spacing(2),
+      textAlign: "center",
+      color: theme.palette.text.secondary,
+   }
+ }));
+
 
 export const SingleDay = () => {
   const [data, setData] = useState(initialData);
   const [showBarChart, setShowBarChart] = useState(false);
-
+  
+  const classes = useStyles();
   useEffect(() => {
     //Count "Predicted" pallets for each product according to Coficien and add to array of data
     setData(
@@ -85,7 +95,7 @@ export const SingleDay = () => {
         return { ...product, predictedPallets };
       })
     );
-  }, [initialData]);
+  }, []);
 
   const onPalletsInputChange = (e) => {
     const updated = data.map((product) => {
@@ -113,7 +123,8 @@ export const SingleDay = () => {
   };
 
   return (
-    <div className="singleDay">
+    <Paper className={classes.paper}>
+        <div className="singleDay">
       <Grid container spacing={1}>
         <Grid item xs={12} md={12}>
           <DayTable
@@ -144,5 +155,6 @@ export const SingleDay = () => {
         />
       </Grid>
     </div>
+    </Paper> 
   );
 };

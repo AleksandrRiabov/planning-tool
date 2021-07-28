@@ -20,7 +20,7 @@ const data = [
 		{day: "monday", date: "27.07.2021", cases: 2500, pallets: 100, trailers: 4},
 		{day: "tuesday", date: "28.07.2021", cases: 4545, pallets: 150, trailers: 6},
 		{day: "wednesday", date: "29.07.2021", cases: 4150, pallets: 130, trailers: 5},
-		{day: "thursday", date: "30.07.2021", cases: 3500, pallets: 110, trailers: 5},
+		{day: "thursday", date: "30.07.2021", cases: 4510, pallets: 110, trailers: 5},
 		{day: "friday", date: "31.08.2021", cases: 2980, pallets: 105, trailers: 4},
 		{day: "saturday", date: "01.08.2021", cases: 4545, pallets: 166, trailers: 7},
 		{day: "sunday", date: "02.08.2021", cases: 1700, pallets: 74, trailers: 3},
@@ -36,17 +36,17 @@ const data = [
 	]},
 ]
 
-const weekData = [
-	{week: 1, cases: 21145, pallets: 700, trailers: 25},
-	{week: 2, cases: 21145, pallets: 700, trailers: 25},
-	{week: 3, cases: 21145, pallets: 700, trailers: 25},
-	{week: 4, cases: 21145, pallets: 700, trailers: 25},
-	{week: 5, cases: 21145, pallets: 700, trailers: 25}
-]
+// const weekData = [
+// 	{week: 1, cases: 21145, pallets: 700, trailers: 25},
+// 	{week: 2, cases: 21145, pallets: 700, trailers: 25},
+// 	{week: 3, cases: 21145, pallets: 700, trailers: 25},
+// 	{week: 4, cases: 21145, pallets: 700, trailers: 25},
+// 	{week: 5, cases: 21145, pallets: 700, trailers: 25}
+// ]
 
 const useStyles = makeStyles((theme) => ({
    table: {
-      minWidth: 650,
+      minWidth: 350,
    },
    firstCell: {
       background: "teal",
@@ -79,7 +79,7 @@ export default function MainTable() {
                </Paper>
             </Grid>
             <Grid item xs={12} md={3}>
-               <SummaryBox />
+               <SummaryBox data={data[0].days}/>
             </Grid>
             <Grid item xs={12}>
                <TableContainer component={Paper}>

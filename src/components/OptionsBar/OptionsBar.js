@@ -5,7 +5,6 @@ import Box from '@material-ui/core/Box';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import DeveloperModeIcon from '@material-ui/icons/DeveloperMode';
 import SaveIcon from '@material-ui/icons/Save';
-import { FormHelperText } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {

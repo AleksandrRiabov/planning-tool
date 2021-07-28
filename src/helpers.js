@@ -4,19 +4,37 @@ export const getTrailersFromPallets = (palletsQty = 0) => {
    return {trailers, pallets}
 }
 
-export const getTotal = (data, name) => {
+export const getTotal = (data) => {
+
     return data.reduce((total, product) => {
-      if (name === "predictedCases") {
-        if (product.cases) {
-          return total + +product.cases;
-        } else {
-          return total + +product.predictedCases;
-        }
+      const cases = product.cases ? product.cases : 0;
+      const predictedCases = product.cases ? product.cases : product.predictedCases;
+      return {
+        totalCases: total.totalCases + +cases ,
+        totalPallets: total.totalPallets + +product.pallets,
+        totalPredictedCases: total.totalPredictedCases + +predictedCases,
+        totalPredictedPallets: total.totalPredictedPallets + +product.predictedPallets
       }
-      return total + +product[name];
-    }, 0);
+    },{totalCases: 0, totalPallets: 0, totalPredictedCases: 0, totalPredictedPallets: 0});
   };
 
+  export const getAllTotalsAndAverages = (data) => {
+        const allProducts = data.length;
+        const totals = data.reduce((total, product) => {
+             return {
+              cases: total.cases + +product.cases,
+              pallets: total.pallets + +product.pallets,
+              trailers: total.trailers + +product.trailers,
+            }
+       });
+
+       return {
+         ...totals,
+          averageCasses: (totals.cases / allProducts).toFixed(),
+          averagePallets: (totals.pallets / allProducts).toFixed(),
+          averageTrailers: (totals.trailers / allProducts).toFixed() 
+        }
+  }
 
   export const createChartData = (data) => {
     const chartData = {
