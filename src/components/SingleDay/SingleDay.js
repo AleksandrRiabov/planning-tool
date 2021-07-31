@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+
 import { makeStyles } from '@material-ui/core/styles';
+import { CSSTransition } from 'react-transition-group';
 import "./SingleDay.css";
-import { DayTable } from "../DayTable/DayTable";
+
+import DayTable  from "../DayTable/DayTable";
 import BarChart from "../BarChart/BarChart";
 import OptionsBar from "../OptionsBar/OptionsBar";
-import { CSSTransition } from 'react-transition-group';
-
+import Loading   from "../Loading/Loading";
+import Error from "../Error/Error";
 
 import { createChartData } from "../../helpers";
-
+import { getSingleDayData } from "../../services";
 
 
 const initialData = [
@@ -80,22 +83,40 @@ const useStyles = makeStyles((theme) => ({
  }));
 
 
-export const SingleDay = () => {
-  const [data, setData] = useState(initialData);
+export const SingleDay = ({date}) => {
+  const [data, setData] = useState({});
   const [showBarChart, setShowBarChart] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState({isError: false, message: ""});
   
   const classes = useStyles();
-  useEffect(() => {
-    //Count "Predicted" pallets for each product according to Coficien and add to array of data
-    setData(
-      initialData.map((product) => {
-        const predictedPallets = Math.round(
-          product.cof * +product.predictedCases
-        );
-        return { ...product, predictedPallets };
-      })
-    );
-  }, []);
+	
+ useEffect(() => {
+   setLoading(true);
+
+   const initializeData = async () => {
+      try {
+         const fetchedData = await getSingleDayData(date);
+         //Count "Predicted" pallets for each product according to coefficient and add to array of data
+         setData(
+            (fetchedData ).map((product) => {
+               const predictedPallets = Math.round(
+                  product.cof * +product.predictedCases
+               );
+               return { ...product, predictedPallets };
+            })
+         );
+      } catch (err) {
+         console.log("Data Not Fetched");
+		  setError({isError: true, message: err.message});
+      } finally {
+         setLoading(false);
+      }
+   };
+
+   initializeData();
+}, [date]);
+
 
   const onPalletsInputChange = (e) => {
     const updated = data.map((product) => {
@@ -122,6 +143,14 @@ export const SingleDay = () => {
     setData(updated);
   };
 
+	if (loading) {
+		return <Loading/>
+	}
+	
+	if (error.isError) {
+	   return <Error message={error.message}/>
+	}
+	
   return (
     <Paper className={classes.paper}>
         <div className="singleDay">

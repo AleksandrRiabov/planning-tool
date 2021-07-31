@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,9 +13,13 @@ import LineChart from "../LineChart/LineChart";
 import { Link }  from "react-router-dom"
 
 import SummaryBox from "../SummaryBox/SummaryBox";
+import Loading   from "../Loading/Loading";
+import Error from "../Error/Error";
+
+import { getSingleWeekData } from "../../services";
 
 
-const data = [
+const initialData = [
 	{week: 1, days: [
 		{day: "monday", date: "27.07.2021", cases: 2500, pallets: 100, trailers: 4},
 		{day: "tuesday", date: "28.07.2021", cases: 4545, pallets: 150, trailers: 6},
@@ -67,9 +71,43 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
+
 export default function MainTable() {
+   const [data, setData] = useState({});
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState({isError: false, message: ""});
+   const [date, setDate] = useState(new Date());
+	
    const classes = useStyles();
 
+	useEffect(() => {
+		setLoading(true);
+		setData(initialData);
+		setLoading(false);
+		
+		// const runFetch = async() => {
+		// 	try{
+		// 		const fetchedData = await getSingleWeekData(date);
+		// 			setData(fetchedData);						
+		// 	} catch(err){
+		// 		console.log("Not Fetched data");
+		//         setError({isError: true, message: err.message});
+		// 	} finally{
+		// 		setLoading(false);
+		// 	}
+		// }
+		// runFetch();
+	}, []);
+	
+	
+	if (loading) {
+		return <Loading />
+	}
+	
+	if (error.isError) {
+	   return <Error message={error.message}/>
+	}
+	
    return (
       <Paper className={classes.paper}>
          <Grid container spacing={3}>

@@ -6,17 +6,21 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
+
 import { useStyles } from "./dayTableStyles";
 import "./DayTable.css";
 
 import { getTrailersFromPallets, getTotal } from "../../helpers";
 
-export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => {
+
+  const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => {
   const classes = useStyles();
+	  
 
   const { totalCases, totalPallets, totalPredictedCases, totalPredictedPallets } = getTotal(data);
   const totalActualTrailers = getTrailersFromPallets(totalPallets);
   const totalPredictedTrailers = getTrailersFromPallets(totalPredictedPallets);
+	  
 
   return (
     <TableContainer component={Paper}>
@@ -71,7 +75,7 @@ export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => 
                 <TableCell align="center">
                   {pallets ? (pallets / 26).toFixed(2) : 0}
                 </TableCell>
-                {/* SECTION EXPECTED*/}
+                {/* SECTION EXPECTED DATA*/}
                 <TableCell
                   align="center"
                   className={!cases ? classes.predictedInfo : ""}
@@ -93,7 +97,7 @@ export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => 
               </TableRow>
             );
           })}
-          {/*SUMMRY*/}
+          {/*SUMMRY ACTUAL DATA*/}
           <TableRow key="total">
             <TableCell
               className={classes.product}
@@ -151,3 +155,5 @@ export const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => 
     </TableContainer>
   );
 };
+
+export default DayTable;
