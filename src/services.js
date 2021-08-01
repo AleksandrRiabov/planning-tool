@@ -1,7 +1,7 @@
 
 export const getSingleDayData = async(date) => {
 	try{
-	     const response = await fetch(`/api/dayp/${date}`);
+	     const response = await fetch(`/api/day/${date}`);
 	     const data = await response.json();	
 		 return data;
 	} catch(err) {

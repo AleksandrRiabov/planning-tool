@@ -28,19 +28,28 @@ const useStyles = makeStyles({
 	},
 });
 
-const SummaryBox = ({data}) => {
+const SummaryBox = ({ data, weekDate, setWeekDate }) => {
 	const classes = useStyles();
 	
 	const { cases, averageCasses, pallets, averagePallets, trailers, averageTrailers } = getAllTotalsAndAverages(data);
+
+	const changeWeekNumber = (type) => {
+		if (type === "add") {
+			setWeekDate(prev => prev.clone().add(1, "week"));
+		} 
+		if (type === "subtract"){
+			setWeekDate(prev => prev.clone().subtract(1, "week"));
+		}
+	}
 
 	return (
 		<Paper className={classes.root} >
 			<Grid container spacing={1}>
 				<Grid item xs={12}>
 				  <Box className={classes.titleBox}>
-					  <ArrowBackIcon className={classes.arrows}/>
-					  <Typography  variant="h6" color="inherit" >Week 52 </Typography>
-					  <ArrowForwardIcon className={classes.arrows}/>
+					  <ArrowBackIcon onClick={() => changeWeekNumber("subtract") } className={classes.arrows}/>
+					  <Typography  variant="h6" color="inherit" >Week {weekDate.format("WW")} </Typography>
+					  <ArrowForwardIcon onClick={() => changeWeekNumber("add") } className={classes.arrows}/>
 					</Box>
 				</Grid>
 				<Grid item xs={12} sm={6} md={12}>
