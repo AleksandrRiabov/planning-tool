@@ -8,8 +8,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import { SingleDay } from './components/SingleDay/SingleDay';
-import SingleWeek from "./components/SingleWeek/SingleWeek";
+import { SingleDay } from './Pages/SingleDay/SingleDay';
+import SingleWeek from "./Pages/SingleWeek/SingleWeek";
 import Footer from "./components/Footer/Footer";
 import Navbar from './components/Navbar/Navbar';
 

@@ -11,17 +11,17 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
-import LineChart from "../LineChart/LineChart";
-import SummaryBox from "../SummaryBox/SummaryBox";
-import Loading from "../Loading/Loading";
-import Error from "../Error/Error";
-import Modal from "../Modal/Modal";
-import AddNewWeek from "../AddNewWeek/AddNewWeek";
+import LineChart from "../../components/LineChart/LineChart";
+import SummaryBox from "./components/SummaryBox/SummaryBox";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
+import Modal from "../../components/Modal/Modal";
+import AddNewWeek from "./components/AddNewWeek/AddNewWeek";
 
 import { Link } from "react-router-dom";
 
 import moment from "moment";
-import useFetch from "../../useFetch";
+import useFetch from "../../hooks/useFetch";
 import { Typography } from "@material-ui/core";
 
 

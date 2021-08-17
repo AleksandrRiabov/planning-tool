@@ -10,18 +10,15 @@ import Box from "@material-ui/core/Box";
 import { useStyles } from "./dayTableStyles";
 import "./DayTable.css";
 
-import { getTrailersFromPallets, getTotal } from "../../helpers";
-
+import { getTrailersFromPallets, getTotal } from "../../../../helpers";
 
   const DayTable = ({ data, onCasesInputChange, onPalletsInputChange }) => {
   const classes = useStyles();
 	  
-
   const { totalCases, totalPallets, totalPredictedCases, totalPredictedPallets } = getTotal(data);
   const totalActualTrailers = getTrailersFromPallets(totalPallets);
   const totalPredictedTrailers = getTrailersFromPallets(totalPredictedPallets);
 	  
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">

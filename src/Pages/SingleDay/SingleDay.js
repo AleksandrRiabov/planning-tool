@@ -6,14 +6,14 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import useStyles from "./useStyles";
 
-import DayTable from "../DayTable/DayTable";
-import BarChart from "../BarChart/BarChart";
-import OptionsBar from "../OptionsBar/OptionsBar";
-import Loading from "../Loading/Loading";
-import Error from "../Error/Error";
-import Saving from "../Saving/Saving";
-import Modal from "../Modal/Modal";
-import DaysLineChart from "../DaysLineChart/DaysLineChart";
+import DayTable from "./components/DayTable/DayTable";
+import BarChart from "./components/BarChart/BarChart";
+import OptionsBar from "./components/OptionsBar/OptionsBar";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
+import Saving from "./components/Saving/Saving";
+import Modal from "../../components/Modal/Modal";
+import DaysLineChart from "./components/DaysLineChart/DaysLineChart";
 
 
 import { formatChartData } from "../../helpers";
@@ -37,8 +37,7 @@ export const SingleDay = ({ date }) => {
             const fetchedData = await getSingleDayData(date);
             //Count "Predicted" pallets for each product according to coefficient and add's to array of data
             const products = fetchedData.products.map((product) => {
-               const cases =
-                  +product.cases > 0 ? +product.cases : +product.predictedCases;
+               const cases = +product.cases > 0 ? +product.cases : +product.predictedCases;
                const predictedPallets = Math.round(product.cof * cases);
                return { ...product, predictedPallets };
             });

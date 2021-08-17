@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Bar } from "react-chartjs-2";
 import Paper from "@material-ui/core/Paper";
-import useScrollToElement from "../SingleDay/useScrollToElemet";
+import useScrollToElement from "../../../../hooks/useScrollToElemet";
 
 const BarChart = ({ chartData, title }) => {
    const chartRef = useRef(null);

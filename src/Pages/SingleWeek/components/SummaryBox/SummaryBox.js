@@ -7,7 +7,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import CountUp from "react-countup";
 
-import { getAllTotalsAndAverages } from "../../helpers";
+import { getAllTotalsAndAverages } from "../../../../helpers";
 
 const SummaryBox = ({ data, weekDate, setWeekDate, setIndicator }) => {
    const classes = useStyles();

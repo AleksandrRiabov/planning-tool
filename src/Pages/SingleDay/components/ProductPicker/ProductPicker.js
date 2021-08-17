@@ -1,5 +1,5 @@
 import { NativeSelect, FormControl } from "@material-ui/core";
-import { capitalize } from "../../helpers";
+import { capitalize } from "../../../../helpers";
 
 const ProductPicker = ({ setSelectedProduct, selectedProduct, allProdNames }) => {
    return (

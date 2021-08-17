@@ -1,14 +1,14 @@
 import { useState , useRef} from "react";
-import useFetch from "../../useFetch";
-import useScrollToElement from "../SingleDay/useScrollToElemet";
+import useFetch from "../../../../hooks/useFetch";
+import useScrollToElement from "../../../../hooks/useScrollToElemet";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import { Typography } from "@material-ui/core";
 import { useStyles } from "./useStyles";
 
-import LineChart from "../LineChart/LineChart";
+import LineChart from "../../../../components/LineChart/LineChart";
 import ProductPcker from "../ProductPicker/ProductPicker";
-import Error from "../Error/Error";
+import Error from "../../../../components/Error/Error";
 
 const DaysLineChart = ({ date, weeksQty, allProdNames }) => {
    const classes = useStyles();
