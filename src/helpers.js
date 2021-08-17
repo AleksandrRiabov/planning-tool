@@ -8,7 +8,7 @@ export const getTotal = (data) => {
 
     return data.reduce((total, product) => {
       const cases = product.cases ? product.cases : 0;
-      const predictedCases = product.cases ? product.cases : product.predictedCases;
+      const {predictedCases} =  product;
       return {
         totalCases: total.totalCases + +cases ,
         totalPallets: total.totalPallets + +product.pallets,
@@ -26,24 +26,22 @@ export const getTotal = (data) => {
               pallets: total.pallets + +product.pallets,
               trailers: total.trailers + +product.trailers,
             }
-       });
+       }, {cases: 0, pallets: 0, trailers: 0});
 
        return {
          ...totals,
-          averageCasses: (totals.cases / allProducts).toFixed(),
+         trailers: {trailers: Math.floor(totals.trailers), pallets: totals.pallets % 26},
+          averageCases: (totals.cases / allProducts).toFixed(),
           averagePallets: (totals.pallets / allProducts).toFixed(),
           averageTrailers: (totals.trailers / allProducts).toFixed() 
         }
   }
 
-  export const createChartData = (data) => {
+  export const formatChartData = (data) => {
     const chartData = {
        labels: [],
        cases: [],
     }
-    const capitalize = (str, lower = false) =>
-  (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
-;
 
        data.forEach(product => {
           chartData.labels.push(capitalize(product.name));
@@ -56,6 +54,9 @@ export const getTotal = (data) => {
  }
 
   
+ // Capitalize 
+ export function capitalize(str, lower = false){
+ return (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
+ }
 
- 
 

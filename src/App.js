@@ -11,7 +11,6 @@ import Container from '@material-ui/core/Container';
 import { SingleDay } from './components/SingleDay/SingleDay';
 import SingleWeek from "./components/SingleWeek/SingleWeek";
 import Footer from "./components/Footer/Footer";
-
 import Navbar from './components/Navbar/Navbar';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +36,9 @@ function App() {
 			     <Grid item xs={12}>
            <Switch>
                 <Route path="/" exact><SingleWeek /></Route>
-                <Route path="/day"><SingleDay/></Route>
+                <Route path="/day/:date"  render={({match}) => {
+                  return <SingleDay date={match.params.date}/>
+                }}/>
 		      </Switch>	
              </Grid>	 
         </Grid>

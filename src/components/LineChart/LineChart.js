@@ -1,12 +1,33 @@
+import  Typography  from "@material-ui/core/Typography";
 import {Line} from "react-chartjs-2";
+import { makeStyles } from '@material-ui/core/styles';
+import Box from "@material-ui/core/Box";
 
-const LineChart = ({data}) =>  {
-   if (!data.length){
-      return "Loading..."
+
+const useStyles = makeStyles({
+   root: {
+      position: "relative"
+   },
+   loadingLocal: {
+      position: "absolute",
+      display: "flex",
+      justifyContent: "center", 
+      alignItems: "center",
+      width: "100%",
+      height: "100%",
    }
+ });
+
+const LineChart = ({chartData, loading}) =>  {
+   const data = chartData.length ? chartData: [{}];
+   const classes = useStyles()
 
    return (
-      <div >
+      <Box className={classes.root}>
+         {loading ? <Box className={classes.loadingLocal}>
+            <Typography className={classes.txt} variant="h6" color="textSecondary">Loading.. Please Wait..</Typography>
+         </Box>: null}
+
          {data.length ? 
        <Line 
        data={{
@@ -33,7 +54,7 @@ const LineChart = ({data}) =>  {
          }]
        }}
        /> : null}
-      </div>
+      </Box>
    )
 }
 

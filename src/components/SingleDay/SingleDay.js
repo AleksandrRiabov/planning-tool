@@ -1,189 +1,170 @@
 import { useState, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-
-import { makeStyles } from '@material-ui/core/styles';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from "react-transition-group";
 import "./SingleDay.css";
 
-import DayTable  from "../DayTable/DayTable";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import useStyles from "./useStyles";
+
+import DayTable from "../DayTable/DayTable";
 import BarChart from "../BarChart/BarChart";
 import OptionsBar from "../OptionsBar/OptionsBar";
-import Loading   from "../Loading/Loading";
+import Loading from "../Loading/Loading";
 import Error from "../Error/Error";
+import Saving from "../Saving/Saving";
+import Modal from "../Modal/Modal";
+import DaysLineChart from "../DaysLineChart/DaysLineChart";
 
-import { createChartData } from "../../helpers";
+
+import { formatChartData } from "../../helpers";
 import { getSingleDayData } from "../../services";
 
+export const SingleDay = ({ date }) => {
+   const [data, setData] = useState();
+   const [showBarChart, setShowBarChart] = useState(false);
+   const [showLineChart, setShowLineChart] = useState(false);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState({ isError: false, message: "" });
+   const [saving, setSaving] = useState({ inProgress: false, showBtn: false, errorMessage: "" });
 
-const initialData = [
-  {
-    name: "chill",
-    cases: "",
-    pallets: "",
-    category: 1,
-    predictedCases: 777,
-    cof: 0.0071,
-  },
-  {
-    name: "produce",
-    cases: "",
-    pallets: "",
-    category: 1,
-    predictedCases: 848,
-    cof: 0.02,
-  },
-  {
-    name: "bread",
-    cases: "",
-    pallets: "",
-    category: 1,
-    predictedCases: 545,
-    cof: 0.02,
-  },
-  {
-    name: "ambient",
-    cases: "",
-    pallets: "",
-    category: 1,
-    predictedCases: 4545,
-    cof: 0.006,
-  },
-  {
-    name: "frozen",
-    cases: "",
-    pallets: "",
-    category: 1,
-    predictedCases: 121,
-    cof: 0.025,
-  },
-  {
-    name: "bunzl",
-    cases: "",
-    pallets: "",
-    category: 1,
-    predictedCases: 85,
-    cof: 0.05,
-  },
-  {
-    name: "extra",
-    cases: "",
-    pallets: "",
-    category: 1,
-    predictedCases: 100,
-    cof: 0.009,
-  },
-];
-const useStyles = makeStyles((theme) => ({
-   paper: {
-      padding: theme.spacing(2),
-      textAlign: "center",
-      color: theme.palette.text.secondary,
-   }
- }));
+   const classes = useStyles();
 
-
-export const SingleDay = ({date}) => {
-  const [data, setData] = useState({});
-  const [showBarChart, setShowBarChart] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState({isError: false, message: ""});
-  
-  const classes = useStyles();
-	
- useEffect(() => {
-   setLoading(true);
-
-   const initializeData = async () => {
-      try {
-         const fetchedData = await getSingleDayData(date);
-         //Count "Predicted" pallets for each product according to coefficient and add to array of data
-         setData(
-            (fetchedData ).map((product) => {
-               const predictedPallets = Math.round(
-                  product.cof * +product.predictedCases
-               );
+   useEffect(() => {
+      window.scrollTo(0, 0);
+      setLoading(true);
+      const fetchAndModifyData = async (date) => {
+         try {
+            const fetchedData = await getSingleDayData(date);
+            //Count "Predicted" pallets for each product according to coefficient and add's to array of data
+            const products = fetchedData.products.map((product) => {
+               const cases =
+                  +product.cases > 0 ? +product.cases : +product.predictedCases;
+               const predictedPallets = Math.round(product.cof * cases);
                return { ...product, predictedPallets };
-            })
-         );
-      } catch (err) {
-         console.log("Data Not Fetched");
-		  setError({isError: true, message: err.message});
-      } finally {
-         setLoading(false);
-      }
+            });
+            const names = products.map((product) => product.name);
+
+            setData({ ...fetchedData, products, names });
+         } catch (err) {
+            console.log("Data Not Fetched");
+            setError({ isError: true, message: err.message });
+         } finally {
+            setLoading(false);
+         }
+      };
+
+      fetchAndModifyData(date);
+   }, [date]);
+
+   const saveChanges = async () => {
+      setSaving({ ...saving, inProgress: true });
+      try {
+        const res = await fetch(`/api/day/${data._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data.products),
+         });
+         if (res.status !== 200){
+           throw new Error({message: "Not saved"})
+         }
+         setSaving({ ...saving, inProgress: true, showBtn: true});
+      } catch (e) {
+        setSaving({ inProgress: true, showBtn: true, errorMessage: "Could Not Save Data! Please try again.." });
+      } 
    };
 
-   initializeData();
-}, [date]);
+   const onPalletsInputChange = (e) => {
+      const updated = data.products.map((product) => {
+         if (product.name === e.target.name) {
+            const value = parseInt(e.target.value)
+               ? parseInt(e.target.value)
+               : 0;
+            return { ...product, pallets: value };
+         } else {
+            return product;
+         }
+      });
+      setData({ ...data, products: updated });
+   };
 
+   const onCasesInputChange = (e) => {
+      const updated = data.products.map((product) => {
+         if (product.name === e.target.name) {
+            const value = parseInt(e.target.value)
+               ? parseInt(e.target.value)
+               : 0;
 
-  const onPalletsInputChange = (e) => {
-    const updated = data.map((product) => {
-      if (product.name === e.target.name) {
-        return { ...product, pallets: e.target.value };
-      } else {
-        return product;
-      }
-    });
-    setData(updated);
-  };
+            const predictedPallets =
+               value && value !== 0
+                  ? Math.round(product.cof * +value)
+                  : Math.round(product.cof * product.predictedCases);
+            return { ...product, cases: value, predictedPallets };
+         } else {
+            return product;
+         }
+      });
+      setData({ ...data, products: updated });
+   };
 
-  const onCasesInputChange = (e) => {
-    const updated = data.map((product) => {
-      if (product.name === e.target.name) {
-        const predictedPallets = e.target.value
-          ? Math.round(product.cof * +e.target.value)
-          : Math.round(product.cof * product.predictedCases);
-        return { ...product, cases: e.target.value, predictedPallets };
-      } else {
-        return product;
-      }
-    });
-    setData(updated);
-  };
+   const closeModal = () => setSaving({ inProgress: false, showBtn: false, errorMessage: "" });
 
-	if (loading) {
-		return <Loading/>
-	}
-	
-	if (error.isError) {
-	   return <Error message={error.message}/>
-	}
-	
-  return (
-    <Paper className={classes.paper}>
-        <div className="singleDay">
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={12}>
-          <DayTable
-            data={data}
-            onCasesInputChange={onCasesInputChange}
-            onPalletsInputChange={onPalletsInputChange}
-          />
-        </Grid>
-        <CSSTransition 
-         in={showBarChart}
-         timeout={300}
-         classNames="chart"
-         unmountOnExit
-        >
-        <Grid item xs={12}>
-            <Paper>
-              <BarChart
-                className="chart"
-                chartData={createChartData(data)}
-                title={"Actual Cases vs Expected "}
-              />
+   if (loading) {
+      return <Loading />;
+   }
+   if (error.isError) {
+      return <Error message={error.message} />;
+   }
+
+   return (
+      <Paper className={classes.paper}>
+         {saving.inProgress ? (
+            <Modal>
+               <Saving showBtn={saving.showBtn} closeModal={closeModal} errorMessage={saving.errorMessage}/>
+            </Modal>
+         ) : null}
+         <div className="singleDay">
+            <Paper className={classes.dayTitle}>
+               {data.day} - {data.date}
             </Paper>
-          </Grid>
-        </CSSTransition>
-           <OptionsBar
-          showBarChart={showBarChart}
-          setShowBarChart={setShowBarChart}
-        />
-      </Grid>
-    </div>
-    </Paper> 
-  );
+            <Grid container spacing={1}>
+               <Grid item xs={12}>
+                  <DayTable
+                     data={data.products}
+                     onCasesInputChange={onCasesInputChange}
+                     onPalletsInputChange={onPalletsInputChange}
+                  />
+               </Grid>
+               <Grid className={classes.chart} item xs={12}>
+                  {showLineChart ? (
+                     <DaysLineChart
+                        date={data.date}
+                        allProdNames={data.names}
+                        weeksQty="5"
+                     />
+                  ) : null}
+               </Grid>
+               <CSSTransition
+                  in={showBarChart}
+                  timeout={300}
+                  classNames="chart"
+                  unmountOnExit
+               >
+                  <Grid item xs={12}>
+                        <BarChart
+                           chartData={formatChartData(data.products)}
+                           title={"Actual Cases vs Expected "}
+                        />
+                  </Grid>
+               </CSSTransition>
+               <OptionsBar
+                  showBarChart={showBarChart}
+                  setShowBarChart={setShowBarChart}
+                  saveChanges={saveChanges}
+                  showLineChart={showLineChart}
+                  setShowLineChart={setShowLineChart}
+               />
+            </Grid>
+         </div>
+      </Paper>
+   );
 };

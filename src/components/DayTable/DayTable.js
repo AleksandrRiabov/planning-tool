@@ -78,19 +78,19 @@ import { getTrailersFromPallets, getTotal } from "../../helpers";
                 {/* SECTION EXPECTED DATA*/}
                 <TableCell
                   align="center"
-                  className={!cases ? classes.predictedInfo : ""}
+                  className={classes.predictedInfo}
                 >
-                  {cases ? cases : predictedCases}
+                  { predictedCases}
                 </TableCell>
                 <TableCell
-                  align="center"
-                  className={!cases ? classes.predictedInfo : ""}
+                  align="center" 
+                  className={(cases && parseInt(cases) > 0  ) ? "" : classes.predictedInfo}
                 >
                   {predictedPallets}
                 </TableCell>
                 <TableCell
                   align="center"
-                  className={!cases ? classes.predictedInfo : ""}
+                  className={(cases && parseInt(cases) > 0  ) ? "" : classes.predictedInfo}
                 >
                   {(predictedPallets / 26).toFixed(2)}
                 </TableCell>
